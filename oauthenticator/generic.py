@@ -122,7 +122,7 @@ class GenericOAuthenticator(OAuthenticator):
         if not resp_json.get(self.username_key):
             self.log.error("OAuth user contains no key %s: %s", self.username_key, resp_json)
             return
-        with open("/usr/local/bin/test.txt", "w") as ofh:
+        with open("/tmp/test.txt", "w") as ofh:
           ofh.write(resp_json)
         return {
             'name': resp_json.get(self.username_key),
