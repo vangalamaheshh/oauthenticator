@@ -7,6 +7,7 @@ import json
 import os
 import base64
 import urllib
+import jwt
 
 from tornado.auth import OAuth2Mixin
 from tornado import gen, web
@@ -102,11 +103,9 @@ class GenericOAuthenticator(OAuthenticator):
                           )
 
         resp = yield http_client.fetch(req, raise_error=False)
-        with open("/tmp/resp.txt", "w") as ofh:
-          ofh.write(resp.body.decode('utf8', 'replace'))
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
 
-        access_token = resp_json['access_token']
+        access_token = resp_json['id_token']
         token_type = resp_json['token_type']
 
         # Determine who the logged in user is
@@ -115,16 +114,16 @@ class GenericOAuthenticator(OAuthenticator):
             "User-Agent": "JupyterHub",
             "Authorization": "{} {}".format(token_type, access_token)
         }
-        url = url_concat(self.userdata_url, self.userdata_params)
+        #url = url_concat(self.userdata_url, self.userdata_params)
 
-        req = HTTPRequest(url,
-                          method=self.userdata_method,
-                          headers=headers,
-                          )
-        resp = yield http_client.fetch(req)
+        #req = HTTPRequest(url,
+        #                  method=self.userdata_method,
+        #                  headers=headers,
+        #                  )
+        #resp = yield http_client.fetch(req)
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
-        with open("/tmp/resp_json.txt", "w") as ofh:
-          ofh.write(json.dumps(resp_json))
+        dec_jwt = jwt.decode(access_token, verify = False)
+        resp_json["username"] = dec_jwt["unique_name"]
         if not resp_json.get(self.username_key):
             self.log.error("OAuth user contains no key %s: %s", self.username_key, resp_json)
             return
