@@ -154,8 +154,6 @@ class GitHubOAuthenticator(OAuthenticator):
         auth_state['github_user'] = resp_json
         # A public email will return in the initial query (assuming default scope).
         # Private will not.
-        with open("/tmp/resp_json.txt", "w") as ofh:
-          ofh.write(resp_json)
         return userdict
 
     @gen.coroutine
