@@ -75,7 +75,8 @@ class GenericOAuthenticator(OAuthenticator):
         params = dict(
             redirect_uri=self.get_callback_url(handler),
             code=code,
-            grant_type='authorization_code'
+            grant_type='authorization_code',
+            client_id=self.client_id
         )
 
         url = self.token_url
