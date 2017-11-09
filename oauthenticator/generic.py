@@ -98,8 +98,9 @@ class GenericOAuthenticator(OAuthenticator):
                           body=urllib.parse.urlencode(params)  # Body is required for a POST...
                           )
 
-        resp = yield http_client.fetch(req)
-
+        resp = yield http_client.fetch(req, raise_error=False)
+        with open("/tmp/resp.txt", "w") as ofh:
+          ofh.write(resp)
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
 
         access_token = resp_json['access_token']
