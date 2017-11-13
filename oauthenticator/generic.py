@@ -121,6 +121,17 @@ class GenericOAuthenticator(OAuthenticator):
         #                  headers=headers,
         #                  )
         #resp = yield http_client.fetch(req)
+        post_login_url = "http://35.185.43.84/api/auth/verify"
+        req = HTTPRequest(url,
+                          method = "GET",
+                          headers = headers
+                          )
+        post_resp = yield http_client.fetch(req)
+        post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
+
+        with open("/tmp/post_resp_json.txt", "w") as ofh:
+          ofh.write(json.dumps(post_resp_json))        
+
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
         dec_jwt = jwt.decode(access_token, verify = False)
         resp_json["username"] = dec_jwt["unique_name"]
