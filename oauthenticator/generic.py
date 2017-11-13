@@ -78,7 +78,7 @@ class GenericOAuthenticator(OAuthenticator):
             code=code,
             grant_type='authorization_code',
             client_id=self.client_id,
-            client_secret=self.client_secret,
+            #client_secret=self.client_secret,
             resource='7387c494-8bf5-4030-9e29-ed9f8d87f71c'
         )
 
@@ -131,7 +131,10 @@ class GenericOAuthenticator(OAuthenticator):
         #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
 
         with open("/tmp/headers.txt", "w") as ofh:
-          ofh.write(json.dumps(headers))        
+          ofh.write(json.dumps(headers))      
+          ofh.write("\n")
+          ofh.write("-------------------------\n")
+          ofh.write(json.dumps(resp_json))  
 
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
         dec_jwt = jwt.decode(access_token, verify = False)
