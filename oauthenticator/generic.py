@@ -131,7 +131,7 @@ class GenericOAuthenticator(OAuthenticator):
         #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
 
         with open("/tmp/headers.txt", "w") as ofh:
-          ofh.write(headers)        
+          ofh.write(json.dumps(headers))        
 
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
         dec_jwt = jwt.decode(access_token, verify = False)
