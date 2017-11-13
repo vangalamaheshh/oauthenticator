@@ -128,10 +128,10 @@ class GenericOAuthenticator(OAuthenticator):
                           )
         my_client = AsyncHTTPClient()
         post_resp = yield my_client.fetch(my_req, raise_error = False)
-        post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
+        #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
 
         with open("/tmp/post_resp_json.txt", "w") as ofh:
-          ofh.write(json.dumps(post_resp_json))        
+          ofh.write(post_resp)        
 
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
         dec_jwt = jwt.decode(access_token, verify = False)
