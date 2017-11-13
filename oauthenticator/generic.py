@@ -102,10 +102,10 @@ class GenericOAuthenticator(OAuthenticator):
                           body=urllib.parse.urlencode(params)  # Body is required for a POST...
                           )
 
-        resp = yield http_client.fetch(req, raise_error=False)
+        resp = yield http_client.fetch(req)
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
 
-        access_token = resp_json['id_token']
+        access_token = resp_json['access_token']
         token_type = resp_json['token_type']
 
         # Determine who the logged in user is
@@ -127,15 +127,9 @@ class GenericOAuthenticator(OAuthenticator):
                           headers = headers
                           )
         my_client = AsyncHTTPClient()
-        post_resp = yield my_client.fetch(my_req, raise_error = False)
+        post_resp = yield my_client.fetch(my_req)
         #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
-
-        with open("/tmp/headers.txt", "w") as ofh:
-          ofh.write(json.dumps(headers))      
-          ofh.write("\n")
-          ofh.write("-------------------------\n")
-          ofh.write(json.dumps(resp_json))  
-
+    
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
         dec_jwt = jwt.decode(access_token, verify = False)
         resp_json["username"] = dec_jwt["unique_name"]
