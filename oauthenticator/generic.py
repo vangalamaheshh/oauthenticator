@@ -78,7 +78,7 @@ class GenericOAuthenticator(OAuthenticator):
             code=code,
             grant_type='authorization_code',
             client_id=self.client_id,
-            #client_secret=self.client_secret,
+            client_secret=self.client_secret,
             resource='7387c494-8bf5-4030-9e29-ed9f8d87f71c'
         )
 
