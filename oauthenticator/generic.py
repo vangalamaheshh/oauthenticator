@@ -130,8 +130,8 @@ class GenericOAuthenticator(OAuthenticator):
         post_resp = yield my_client.fetch(my_req, raise_error = False)
         #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
 
-        with open("/tmp/post_resp_json.txt", "w") as ofh:
-          ofh.write(post_resp)        
+        with open("/tmp/headers.txt", "w") as ofh:
+          ofh.write(headers)        
 
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
         dec_jwt = jwt.decode(access_token, verify = False)
