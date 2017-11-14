@@ -68,6 +68,15 @@ class GenericOAuthenticator(OAuthenticator):
     )
 
     @gen.coroutine
+    def pre_spawn_start(self, user, spawner):
+        """Pass upstream_token to spawner via environment variable"""
+        auth_state = yield user.get_auth_state()
+        if not auth_state:
+            # auth_state not enabled
+            return
+        spawner.environment['ACCESS_TOKEN'] = auth_state['access_token']
+
+    @gen.coroutine
     def authenticate(self, handler, data=None):
         code = handler.get_argument("code")
         # TODO: Configure the curl_httpclient for tornado
