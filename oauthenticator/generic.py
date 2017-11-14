@@ -34,7 +34,7 @@ class GenericLoginHandler(OAuthLoginHandler, GenericEnvMixin):
 class GenericOAuthenticator(OAuthenticator):
 
     login_service = Unicode(
-        "GenericOAuth2",
+        "UMass Login!",
         config=True
     )
 
