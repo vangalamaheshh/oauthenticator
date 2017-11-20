@@ -130,7 +130,7 @@ class GenericOAuthenticator(OAuthenticator):
         #                  headers=headers,
         #                  )
         #resp = yield http_client.fetch(req)
-        post_login_url = "http://35.185.43.84/api/auth/verify"
+        post_login_url = "http://api-synergist.umassmed.edu/api/auth/verify"
         my_req = HTTPRequest(post_login_url,
                           method = "GET",
                           headers = headers
