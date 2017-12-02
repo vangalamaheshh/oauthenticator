@@ -131,10 +131,14 @@ class GenericOAuthenticator(OAuthenticator):
         #                  )
         #resp = yield http_client.fetch(req)
         post_login_url = "https://api-synergist.umassmed.edu/api/auth/verify"
-        my_req = HTTPRequest(post_login_url,
-                          method = "GET",
-                          headers = headers
-                          )
+        my_req = HTTPRequest(
+                              post_login_url,
+                              method = "GET",
+                              headers = headers,
+                              client_key="/etc/ssl/certs/client.key.pem",
+                              client_cert="/etc/ssl/certs/client.cert.pem",
+                              ca_certs="/etc/ssl/certs/ca.pem"
+                            )
         my_client = AsyncHTTPClient()
         post_resp = yield my_client.fetch(my_req)
         #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
