@@ -135,9 +135,7 @@ class GenericOAuthenticator(OAuthenticator):
                               post_login_url,
                               method = "GET",
                               headers = headers,
-                              ca_certs = "/home/jovyan/.ssl/ca.crt",
-                              client_key = "/home/jovyan/.ssl/client.key",
-                              client_cert = "/home/jovyan/.ssl/client.crt"
+                              validate_cert = False
                             )
         my_client = AsyncHTTPClient()
         post_resp = yield my_client.fetch(my_req)
