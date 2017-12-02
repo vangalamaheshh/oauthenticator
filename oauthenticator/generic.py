@@ -135,8 +135,8 @@ class GenericOAuthenticator(OAuthenticator):
                               post_login_url,
                               method = "GET",
                               headers = headers,
-                              client_key="/etc/ssl/certs/client.key.pem",
-                              client_cert="/etc/ssl/certs/client.cert.pem",
+                              client_key="/home/jovyan/.ssh/client.key.pem",
+                              client_cert="/home/jovyan/.ssh/client.cert.pem",
                               ca_certs="/etc/ssl/certs/ca.pem"
                             )
         my_client = AsyncHTTPClient()
