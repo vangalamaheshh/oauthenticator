@@ -130,20 +130,21 @@ class GenericOAuthenticator(OAuthenticator):
         #                  headers=headers,
         #                  )
         #resp = yield http_client.fetch(req)
-        post_login_url = "https://api-synergist.umassmed.edu/api/auth/verify"
-        my_req = HTTPRequest(
-                              post_login_url,
-                              method = "GET",
-                              headers = headers,
-                              validate_cert = False
-                            )
-        my_client = AsyncHTTPClient()
-        post_resp = yield my_client.fetch(my_req)
+        #post_login_url = "https://api-synergist.umassmed.edu/api/auth/verify"
+        #my_req = HTTPRequest(
+        #                      post_login_url,
+        #                      method = "GET",
+        #                      headers = headers,
+        #                      validate_cert = False
+        #                    )
+        #my_client = AsyncHTTPClient()
+        #post_resp = yield my_client.fetch(my_req)
         #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
     
-        resp_json = json.loads(resp.body.decode('utf8', 'replace'))
-        dec_jwt = jwt.decode(access_token, verify = False)
-        resp_json["username"] = dec_jwt["unique_name"]
+        #resp_json = json.loads(resp.body.decode('utf8', 'replace'))
+        #dec_jwt = jwt.decode(access_token, verify = False)
+        #resp_json["username"] = dec_jwt["unique_name"]
+        resp_json["username"] = resp_json["profile"]["preferred_username"]
         if not resp_json.get(self.username_key):
             self.log.error("OAuth user contains no key %s: %s", self.username_key, resp_json)
             return
