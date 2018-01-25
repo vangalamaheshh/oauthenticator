@@ -109,6 +109,7 @@ class GenericOAuthenticator(OAuthenticator):
                           method="POST",
                           headers=headers,
                           body=urllib.parse.urlencode(params)  # Body is required for a POST...
+                          validate_cert = False
                           )
 
         resp = yield http_client.fetch(req)
