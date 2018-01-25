@@ -85,6 +85,7 @@ class GenericOAuthenticator(OAuthenticator):
         params = dict(
             redirect_uri=self.get_callback_url(handler),
             code=code,
+            scope = ["openid", "profile", "synergist-api"],
             grant_type='authorization_code',
             client_id=self.client_id,
             client_secret=self.client_secret,
@@ -106,7 +107,7 @@ class GenericOAuthenticator(OAuthenticator):
             "Authorization": "Basic {}".format(b64key.decode("utf8"))
         }
         req = HTTPRequest(url,
-                          method="POST",
+                          method="GET",
                           headers=headers,
                           body=urllib.parse.urlencode(params),  # Body is required for a POST...
                           validate_cert = False
