@@ -81,12 +81,13 @@ class OAuthLoginHandler(BaseHandler):
         redirect_uri = self.authenticator.get_callback_url(self)
         self.log.info('OAuth redirect: %r', redirect_uri)
         state = self.get_state()
+        nonce = uuid.uuid4().hex
         self.set_state_cookie(state)
         self.authorize_redirect(
             redirect_uri=redirect_uri,
             client_id=self.authenticator.client_id,
             scope=["openid", "profile", "synergist-api"],
-            extra_params={'state': state},
+            extra_params={'state': state, 'nonce': nonce},
             response_type='code id_token')
 
 
