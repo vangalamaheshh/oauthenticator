@@ -85,7 +85,7 @@ class OAuthLoginHandler(BaseHandler):
         self.authorize_redirect(
             redirect_uri=redirect_uri,
             client_id=self.authenticator.client_id,
-            scope='openid profile synergist-api',
+            scope=["openid", "profile", "synergist-api"],
             extra_params={'state': state},
             response_type='id_token token')
 
