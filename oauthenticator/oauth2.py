@@ -96,6 +96,14 @@ class OAuthCallbackHandler(BaseHandler):
 
     _state_cookie = None
 
+    def get(self):
+        if not self.request.query:
+            self.set_header('Content-Type', 'text/html')
+            html_with_redirect_javascript = "simple_redirect.html"
+            self.write(html_with_redirect_javascript)
+            return
+        return super().get()
+
     def get_state_cookie(self):
         """Get OAuth state from cookies
 
