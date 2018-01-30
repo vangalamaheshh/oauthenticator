@@ -96,18 +96,6 @@ class OAuthCallbackHandler(BaseHandler):
 
     _state_cookie = None
 
-    def get(self):
-        if not self.request.query:
-            self.set_header('Content-Type', 'text/html')
-            html_with_redirect_javascript = "simple_redirect.html"
-            self.write(html_with_redirect_javascript)
-            with open("/tmp/redirect.log", "w") as redirect_log:
-                redirect_log.write(self.request.query + "\n")
-            return
-        with open("/tmp/redirect_not_happening.log", "w") as redirect_log:
-            redirect_log.write(self.request.query + "\n") 
-        return super().get()
-
     def get_state_cookie(self):
         """Get OAuth state from cookies
 
@@ -193,6 +181,12 @@ class OAuthCallbackHandler(BaseHandler):
 
     @gen.coroutine
     def get(self):
+        if not self.request.query:
+            self.set_header('Content-Type', 'text/html')
+            html_with_redirect_javascript = "simple_redirect.html"
+            self.write(html_with_redirect_javascript)
+            with open("/tmp/redirect.log", "w") as redirect_log:
+                redirect_log.write(self.request.query + "\n")
         self.check_arguments()
         user = yield self.login_user()
         if user is None:
