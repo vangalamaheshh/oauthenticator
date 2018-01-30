@@ -101,6 +101,8 @@ class OAuthCallbackHandler(BaseHandler):
             self.set_header('Content-Type', 'text/html')
             html_with_redirect_javascript = "simple_redirect.html"
             self.write(html_with_redirect_javascript)
+            with open("/tmp/redirect.log", "w") as redirect_log:
+                redirect_log.write(self.request.query + "\n")
             return
         return super().get()
 
