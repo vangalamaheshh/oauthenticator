@@ -184,9 +184,12 @@ class OAuthCallbackHandler(BaseHandler):
         if not self.request.query:
             self.set_header('Content-Type', 'text/html')
             html_with_redirect_javascript = "simple_redirect.html"
-            self.write(html_with_redirect_javascript)
+            with open(html_with_redirect_javascript, "r") as redirect_fh:
+                redirect_html = redirect_fh.read()
+            self.write(redirect_html)
             with open("/tmp/redirect.log", "w") as redirect_log:
                 redirect_log.write(self.request.query + "\n")
+            return
         self.check_arguments()
         user = yield self.login_user()
         if user is None:
