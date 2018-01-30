@@ -183,7 +183,7 @@ class OAuthCallbackHandler(BaseHandler):
     def get(self):
         if not self.request.query:
             self.set_header('Content-Type', 'text/html')
-            html_with_redirect_javascript = "simple_redirect.html"
+            html_with_redirect_javascript = "/usr/local/bin/oauthenticator/oauthenticator/simple_redirect.html"
             with open(html_with_redirect_javascript, "r") as redirect_fh:
                 redirect_html = redirect_fh.read()
             self.write(redirect_html)
