@@ -130,8 +130,6 @@ class OAuthCallbackHandler(BaseHandler):
     
     def check_code(self):
         """Check the OAuth code"""
-        with open("/tmp/check_code.txt", "w") as ofh_log:
-            ofh_log.write(self.request.full_url())
         if not self.get_argument("code", False):
             raise web.HTTPError(400, "OAuth callback made without a code")
     
@@ -187,8 +185,6 @@ class OAuthCallbackHandler(BaseHandler):
             with open(html_with_redirect_javascript, "r") as redirect_fh:
                 redirect_html = redirect_fh.read()
             self.write(redirect_html)
-            with open("/tmp/redirect.log", "w") as redirect_log:
-                redirect_log.write(self.request.query + "\n")
             return
         self.check_arguments()
         user = yield self.login_user()

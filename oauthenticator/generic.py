@@ -114,7 +114,8 @@ class GenericOAuthenticator(OAuthenticator):
 
         resp = yield http_client.fetch(req)
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
-
+        with open("/tmp/response.log", "w") as response_log:
+            response_log.write(json.dumps(resp_json))
         access_token = resp_json['access_token']
         token_type = resp_json['token_type']
 
