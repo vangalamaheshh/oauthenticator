@@ -114,8 +114,6 @@ class GenericOAuthenticator(OAuthenticator):
 
         resp = yield http_client.fetch(req)
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
-        with open("/tmp/response.log", "w") as response_log:
-            response_log.write(json.dumps(resp_json))
         access_token = resp_json['access_token']
         token_type = resp_json['token_type']
 
@@ -125,28 +123,8 @@ class GenericOAuthenticator(OAuthenticator):
             "User-Agent": "JupyterHub",
             "Authorization": "{} {}".format(token_type, access_token)
         }
-        #url = url_concat(self.userdata_url, self.userdata_params)
-
-        #req = HTTPRequest(url,
-        #                  method=self.userdata_method,
-        #                  headers=headers,
-        #                  )
-        #resp = yield http_client.fetch(req)
-        #post_login_url = "https://api-synergist.umassmed.edu/api/auth/verify"
-        #my_req = HTTPRequest(
-        #                      post_login_url,
-        #                      method = "GET",
-        #                      headers = headers,
-        #                      validate_cert = False
-        #                    )
-        #my_client = AsyncHTTPClient()
-        #post_resp = yield my_client.fetch(my_req)
-        #post_resp_json = json.loads(post_resp.body.decode('utf8', 'replace'))
-    
-        #resp_json = json.loads(resp.body.decode('utf8', 'replace'))
-        #dec_jwt = jwt.decode(access_token, verify = False)
-        #resp_json["username"] = dec_jwt["unique_name"]
-        resp_json["username"] = resp_json["profile"]["preferred_username"]
+        dec_jwt = jwt.decode(access_token, verify = False)
+        resp_json["username"] = dec_jwt["name"]
         if not resp_json.get(self.username_key):
             self.log.error("OAuth user contains no key %s: %s", self.username_key, resp_json)
             return
