@@ -96,6 +96,10 @@ class OAuthCallbackHandler(BaseHandler):
 
     _state_cookie = None
 
+    @property
+    def base_url(self):
+        return '#'
+
     def get_state_cookie(self):
         """Get OAuth state from cookies
 
