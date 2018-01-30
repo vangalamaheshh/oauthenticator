@@ -85,7 +85,6 @@ class GenericOAuthenticator(OAuthenticator):
         params = dict(
             redirect_uri=self.get_callback_url(handler),
             code=code,
-            scope="openid profile synergist-api",
             grant_type='authorization_code',
             client_id=self.client_id,
             client_secret=self.client_secret,

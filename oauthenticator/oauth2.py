@@ -96,10 +96,6 @@ class OAuthCallbackHandler(BaseHandler):
 
     _state_cookie = None
 
-    @property
-    def base_url(self):
-        return '#'
-
     def get_state_cookie(self):
         """Get OAuth state from cookies
 
@@ -134,6 +130,8 @@ class OAuthCallbackHandler(BaseHandler):
     
     def check_code(self):
         """Check the OAuth code"""
+        with open("/tmp/check_code.txt", "w") as ofh_log:
+            ofh_log.write(self.request.full_url())
         if not self.get_argument("code", False):
             raise web.HTTPError(400, "OAuth callback made without a code")
     
