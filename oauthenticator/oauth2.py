@@ -88,7 +88,7 @@ class OAuthLoginHandler(BaseHandler):
             client_id=self.authenticator.client_id,
             scope=["openid", "profile", "synergist-api"],
             extra_params={'state': state, 'nonce': nonce},
-            response_type='code id_token')
+            response_type='id_token code')
 
 
 class OAuthCallbackHandler(BaseHandler):
