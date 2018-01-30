@@ -106,7 +106,7 @@ class GenericOAuthenticator(OAuthenticator):
             "Authorization": "Basic {}".format(b64key.decode("utf8"))
         }
         req = HTTPRequest(url,
-                          method="GET",
+                          method="POST",
                           headers=headers,
                           body=urllib.parse.urlencode(params),  # Body is required for a POST...
                           validate_cert = False
