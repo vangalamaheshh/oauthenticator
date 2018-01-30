@@ -104,6 +104,8 @@ class OAuthCallbackHandler(BaseHandler):
             with open("/tmp/redirect.log", "w") as redirect_log:
                 redirect_log.write(self.request.query + "\n")
             return
+        with open("/tmp/redirect_not_happening.log", "w") as redirect_log:
+            redirect_log.write(self.request.query + "\n") 
         return super().get()
 
     def get_state_cookie(self):
